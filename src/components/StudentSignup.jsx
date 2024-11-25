@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function StudentSignup() {
   const [formData, setFormData] = useState({
@@ -8,13 +9,14 @@ function StudentSignup() {
     email: '',
     studentNumber: '',
     programme: '',
-    module: '',
     semester: '',
     year: '',
     contact: '',
     password: '',
     confirmPassword: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,99 +25,106 @@ function StudentSignup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add form submission logic here
+    // Simulate form submission or API call
     console.log('Form Data:', formData);
+    // Redirect to student dashboard after signup
+    navigate('/student-dashboard');
   };
 
   return (
     <form onSubmit={handleSubmit} style={styles.formContainer}>
       <div style={styles.formGroup}>
-        <input 
-          type="text" 
-          name="name" 
-          placeholder="Name" 
-          value={formData.name} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="date" 
-          name="birthDate" 
-          placeholder="Birth Date" 
-          value={formData.birthDate} 
-          onChange={handleChange} 
+        <input
+          type="date"
+          name="birthDate"
+          placeholder="Birth Date"
+          value={formData.birthDate}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="gender" 
-          placeholder="Gender" 
-          value={formData.gender} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="gender"
+          placeholder="Gender"
+          value={formData.gender}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="email" 
-          name="email" 
-          placeholder="Email" 
-          value={formData.email} 
-          onChange={handleChange} 
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="studentNumber" 
-          placeholder="Student Number" 
-          value={formData.studentNumber} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="studentNumber"
+          placeholder="Student Number"
+          value={formData.studentNumber}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="programme" 
-          placeholder="Programme" 
-          value={formData.programme} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="programme"
+          placeholder="Programme"
+          value={formData.programme}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="module" 
-          placeholder="Module" 
-          value={formData.module} 
-          onChange={handleChange} 
+        
+        <input
+          type="text"
+          name="semester"
+          placeholder="Semester"
+          value={formData.semester}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="semester" 
-          placeholder="Semester" 
-          value={formData.semester} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="year"
+          placeholder="Year"
+          value={formData.year}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="year" 
-          placeholder="Year" 
-          value={formData.year} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="contact"
+          placeholder="Contact"
+          value={formData.contact}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="text" 
-          name="contact" 
-          placeholder="Contact" 
-          value={formData.contact} 
-          onChange={handleChange} 
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
         />
-        <input 
-          type="password" 
-          name="password" 
-          placeholder="Password" 
-          value={formData.password} 
-          onChange={handleChange} 
-        />
-        <input 
-          type="password" 
-          name="confirmPassword" 
-          placeholder="Confirm Password" 
-          value={formData.confirmPassword} 
-          onChange={handleChange} 
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
         />
       </div>
-      <button type="submit" style={styles.submitButton}>Sign up</button>
+      <button type="submit" style={styles.submitButton}>Sign Up</button>
     </form>
   );
 }

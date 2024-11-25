@@ -223,3 +223,97 @@ input:focus {
 .signup-form button:hover {
   background-color: var(--primary-hover-color);
 }
+
+/* Attendance Form Styles */
+.attendance-container {
+  background-color: var(--box-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.attendance-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.attendance-container label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.attendance-container input {
+  width: 100%;
+  padding: 0.85rem;
+  margin-bottom: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.attendance-container input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* Status Buttons */
+.status-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.status-button {
+  flex: 1;
+  padding: 0.85rem;
+  margin: 0 0.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Button Colors */
+.status-button.present {
+  background-color: #28a745; /* Green */
+}
+
+.status-button.absent {
+  background-color: #dc3545; /* Red */
+}
+
+.status-button.leave {
+  background-color: var(--primary-color); /* Use primary theme color for consistency */
+}
+
+.status-button:hover {
+  transform: scale(1.05);
+}
+
+.status-button:active {
+  transform: scale(1);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .attendance-container {
+    width: 90%;
+  }
+
+  .status-button {
+    margin: 0.5rem 0;
+  }
+}

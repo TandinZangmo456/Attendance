@@ -1,45 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { getAttendance } from '../api';
+import React from "react";
 
-const AttendanceSheet = ({ classId }) => {
-  const [attendance, setAttendance] = useState([]);
-
-  useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        const response = await getAttendance(classId);
-        setAttendance(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchAttendance();
-  }, [classId]);
+function AttendanceSheet() {
+  // Define a function to handle status change
+  const handleStatusChange = (status) => {
+    console.log("Attendance set to:", status);
+  };
 
   return (
-    <div>
-      <h2>Attendance Sheet</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendance.map((record) => (
-            <tr key={record.id}>
-              <td>{record.student.name}</td>
-              <td>{record.date}</td>
-              <td>{record.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="attendance-container">
+      <h2>Attendance Record</h2>
+      <form>
+        <label htmlFor="course">Module Enrolled</label>
+        <input
+          type="text"
+          id="course"
+          name="course"
+          placeholder="Module Enrolled"
+          required
+        />
+
+        <label htmlFor="date">Date</label>
+        <input type="date" id="date" name="date" required />
+
+        <label htmlFor="status">Status</label>
+        <div id="status" className="status-buttons">
+          <button
+            type="button"
+            className="status-button present"
+            onClick={() => handleStatusChange("Present")}
+          >
+            Present
+          </button>
+          <button
+            type="button"
+            className="status-button absent"
+            onClick={() => handleStatusChange("Absent")}
+          >
+            Absent
+          </button>
+          <button
+            type="button"
+            className="status-button leave"
+            onClick={() => handleStatusChange("Leave")}
+          >
+            Leave
+          </button>
+        </div>
+      </form>
     </div>
   );
-};
+}
 
 export default AttendanceSheet;
