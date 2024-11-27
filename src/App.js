@@ -8,6 +8,7 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 import TeacherDashboard from './pages/TeacherDashboard.jsx';
 import StudentDashboard from './pages/StudentDashboard.jsx';
 import AttendanceSheet from './components/AttendanceSheet.jsx';
+import AttendanceReports from './pages/AttendanceReports.jsx';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
 
         {/* Dashboard Routes */}
         <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
+        <Route path="/report-dashboard/*" element={<AttendanceReports />} />
         <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
 
