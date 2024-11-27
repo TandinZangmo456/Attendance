@@ -16,6 +16,7 @@ function StudentSignup() {
     confirmPassword: '',
   });
 
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -57,6 +58,14 @@ function StudentSignup() {
       return;
     }
 
+    // Validate password match
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return;
+    }
+
+    // If everything is valid, reset password error and proceed
+    setPasswordError('');
     console.log('Form Data:', formData);
     navigate('/student-dashboard');
   };
@@ -155,6 +164,7 @@ function StudentSignup() {
           required
         />
       </div>
+      {passwordError && <div style={styles.errorText}>{passwordError}</div>}
       <button type="submit" style={styles.submitButton}>Sign Up</button>
     </form>
   );
@@ -184,6 +194,11 @@ const styles = {
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: '14px',
+    marginBottom: '10px',
   },
 };
 
