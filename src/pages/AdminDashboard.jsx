@@ -29,7 +29,6 @@ const AdminDashboard = () => {
       <nav className="dashboard-nav">
         <button
           className="nav-button"
-          onClick={() => navigate('/user-management')}
         >
           User Management
         </button>

@@ -18,32 +18,42 @@ function StudentSignup() {
 
   const navigate = useNavigate();
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Enforce an 8-character limit for specific fields
+    // Enforce exact 8-character length for specific fields
     if (name === 'studentNumber' || name === 'contact') {
-      if (value.length > 8) return; // Stop input beyond 8 characters
+      if (value.length > 8) return; // Prevent typing more than 8 characters
     }
 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    // Allow only digits for semester and year
+    if ((name === 'semester' || name === 'year') && !/^\d*$/.test(value)) {
+      return; // Allow only digits
+    }
+
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate studentNumber and contact length
+    // Validate that the fields have exactly 8 characters
     if (formData.studentNumber.length !== 8) {
       alert('Student Number must be exactly 8 characters long.');
       return;
     }
     if (formData.contact.length !== 8) {
-      alert('Contact must be exactly 8 digits long.');
+      alert('Contact must be exactly 8 characters long.');
+      return;
+    }
+
+    // Validate semester and year
+    if (!formData.semester || parseInt(formData.semester, 10) <= 0) {
+      alert('Semester must be a positive integer.');
+      return;
+    }
+    if (!formData.year || parseInt(formData.year, 10) <= 0) {
+      alert('Year must be a positive integer.');
       return;
     }
 
@@ -54,8 +64,7 @@ function StudentSignup() {
   return (
     <form onSubmit={handleSubmit} style={styles.formContainer}>
       <div style={styles.formGroup}>
-        {/* General input fields */}
-        <Input
+        <input
           type="text"
           name="name"
           placeholder="Name"
@@ -63,7 +72,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="date"
           name="birthDate"
           placeholder="Birth Date"
@@ -71,7 +80,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="text"
           name="gender"
           placeholder="Gender"
@@ -79,7 +88,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="email"
           name="email"
           placeholder="Email"
@@ -87,8 +96,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        {/* Restricted length fields */}
-        <Input
+        <input
           type="text"
           name="studentNumber"
           placeholder="Student Number"
@@ -97,7 +105,7 @@ function StudentSignup() {
           maxLength="8"
           required
         />
-        <Input
+        <input
           type="text"
           name="programme"
           placeholder="Programme"
@@ -105,7 +113,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="text"
           name="semester"
           placeholder="Semester"
@@ -113,7 +121,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="text"
           name="year"
           placeholder="Year"
@@ -121,7 +129,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="text"
           name="contact"
           placeholder="Contact"
@@ -130,8 +138,7 @@ function StudentSignup() {
           maxLength="8"
           required
         />
-        {/* Password fields */}
-        <Input
+        <input
           type="password"
           name="password"
           placeholder="Password"
@@ -139,7 +146,7 @@ function StudentSignup() {
           onChange={handleChange}
           required
         />
-        <Input
+        <input
           type="password"
           name="confirmPassword"
           placeholder="Confirm Password"
@@ -152,20 +159,6 @@ function StudentSignup() {
     </form>
   );
 }
-
-// Reusable Input Component
-const Input = ({ type, name, placeholder, value, onChange, maxLength, required }) => (
-  <input
-    type={type}
-    name={name}
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
-    maxLength={maxLength}
-    required={required}
-    style={styles.input}
-  />
-);
 
 const styles = {
   formContainer: {
@@ -183,13 +176,6 @@ const styles = {
     gridTemplateColumns: '1fr 1fr',
     gap: '10px',
     marginBottom: '10px',
-  },
-  input: {
-    padding: '8px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    fontSize: '14px',
-    width: '100%',
   },
   submitButton: {
     backgroundColor: '#007BFF',
