@@ -7,7 +7,7 @@ const AttendanceReports = () => {
     ]);
 
     const handleExport = (format) => {
-        console.log(`Exporting data as ${format}`);
+        alert(`Exporting data as ${format}`);
     };
 
     return (
