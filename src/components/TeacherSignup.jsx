@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 function TeacherSignup() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ function TeacherSignup() {
     confirmPassword: '',
   });
 
+  const navigate = useNavigate(); // Get the navigate function
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -19,8 +22,13 @@ function TeacherSignup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add form submission logic here
+    // Add form validation logic here (e.g., check if passwords match)
+
+    // For now, let's just log the form data
     console.log('Form Data:', formData);
+
+    // After successful form submission, navigate to the Teacher Dashboard
+    navigate('/teacher-dashboard'); // Make sure '/teacher-dashboard' is the correct route
   };
 
   return (
@@ -83,7 +91,7 @@ function TeacherSignup() {
           onChange={handleChange} 
         />
       </div>
-      <button type="submit" style={styles.submitButton}>Sign in</button>
+      <button type="submit" style={styles.submitButton}>Sign Up</button>
     </form>
   );
 }
