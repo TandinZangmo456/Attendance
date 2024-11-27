@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
-// Dummy data for example, replace this with actual data from a server or context
-const initialAttendanceData = [
-  { date: '2024-11-01', status: 'Present', remarks: '' },
-  { date: '2024-11-02', status: 'Absent', remarks: 'Sick' },
-  { date: '2024-11-03', status: 'Present', remarks: '' },
-  { date: '2024-11-04', status: 'Absent', remarks: 'Personal Reason' },
-  { date: '2024-11-05', status: 'Present', remarks: '' },
-];
-
 const StudentDashboard = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [summary, setSummary] = useState({ present: 0, absent: 0, percentage: 0 });
 
-  // Fetch data on component mount, here using dummy data for simplicity
+  // Fetch data from the backend on component mount
   useEffect(() => {
-    setAttendanceData(initialAttendanceData);
-    calculateSummary(initialAttendanceData);
+    const fetchAttendanceData = async () => {
+      try {
+        // Replace with your backend endpoint
+        const response = await fetch('/api/attendance'); 
+        if (!response.ok) {
+          throw new Error('Failed to fetch attendance data');
+        }
+        const data = await response.json(); // Assuming the server returns a JSON response
+        setAttendanceData(data);
+        calculateSummary(data);
+      } catch (error) {
+        console.error('Error fetching attendance data:', error);
+      }
+    };
+
+    fetchAttendanceData();
   }, []);
 
   // Function to calculate attendance summary

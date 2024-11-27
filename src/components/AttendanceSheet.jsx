@@ -1,81 +1,107 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AttendanceSheet = () => {
-  // State to hold form data
-  const [course, setCourse] = useState('');
-  const [date, setDate] = useState('');
-  const [status, setStatus] = useState('');
+  const [formData, setFormData] = useState({
+    course: '',
+    name: '',
+    date: '',
+    status: '',
+  });
+  const navigate = useNavigate();
 
-  // Handler to submit the form
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleStatusChange = (status) => {
+    setFormData({ ...formData, status });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Handle form submission logic here
-    console.log('Attendance Recorded:', {
-      course,
-      date,
-      status,
-    });
-
-    // Reset the form after submission
-    setCourse('');
-    setDate('');
-    setStatus('');
+    // Post the data to the backend API
+    fetch('/api/attendance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert('Attendance recorded successfully');
+          navigate('/student-dashboard'); // Redirect to the dashboard after submission
+        } else {
+          alert('Failed to record attendance');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('An error occurred while recording attendance');
+      });
   };
 
   return (
     <div className="attendance-sheet">
       <h2>Attendance Record</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div>
           <label>Course Enrolled</label>
           <input
             type="text"
+            name="course"
             placeholder="Course Enrolled"
-            value={course}
-            onChange={(e) => setCourse(e.target.value)}
-            required
+            value={formData.course}
+            onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
+        <div>
+          <label>Student Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
           <label>Date</label>
           <input
             type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
+            name="date"
+            value={formData.date}
+            onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
+        <div>
           <label>Status</label>
           <div className="status-buttons">
             <button
               type="button"
-              className={`status-btn ${status === 'Present' ? 'selected' : ''}`}
-              style={{ backgroundColor: '#4CAF50' }} // Green for Present
-              onClick={() => setStatus('Present')}
+              className={formData.status === 'Present' ? 'active' : ''}
+              onClick={() => handleStatusChange('Present')}
             >
               Present
             </button>
             <button
               type="button"
-              className={`status-btn ${status === 'Absent' ? 'selected' : ''}`}
-              style={{ backgroundColor: '#f44336' }} // Red for Absent
-              onClick={() => setStatus('Absent')}
+              className={formData.status === 'Absent' ? 'active' : ''}
+              onClick={() => handleStatusChange('Absent')}
             >
               Absent
             </button>
             <button
               type="button"
-              className={`status-btn ${status === 'Leave' ? 'selected' : ''}`}
-              style={{ backgroundColor: '#c0c0c0' }} // Grey for Leave
-              onClick={() => setStatus('Leave')}
+              className={formData.status === 'Leave' ? 'active' : ''}
+              onClick={() => handleStatusChange('Leave')}
             >
               Leave
             </button>
           </div>
         </div>
-        <button type="submit" className="submit-btn">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
